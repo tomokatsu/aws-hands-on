@@ -63,7 +63,8 @@
   * コンソールにサインインボタンをクリック
 
 # サインイン
-![SignIn](./image/step1_signin_00.png)
+<img src="./image/step1_signin_00.png" width="500px">
+
 * ルートユーザを選択
 * ルートユーザの E メールアドレス: 登録時に設定したアドレスを記入
 * 次へボタンをクリック
@@ -71,8 +72,9 @@
 * サインインボタンをクリック
 
 # アカウントエイリアスを設定
+<img src="./image/step1_account_alias_00.png" width="800px">
+
 * https://console.aws.amazon.com/iam/home?#/home
-![Customize](./image/step1_account_alias_00.png)
 * カスタマイズというリンクをクリック
 * アカウントの別名を作成というポップアップが出る
   * アカウントエイリアス: 世界中の AWS アカウントがユニークに特定される必要があることに留意しつつ、任意のエイリアス名を記入
