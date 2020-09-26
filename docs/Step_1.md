@@ -75,6 +75,8 @@
 * サインインボタンをクリック
 
 # アカウントエイリアスを設定
+<img src="./image/step1_account_alias_00.png" width="800px">
+
 * https://console.aws.amazon.com/iam/home?#/home
 * カスタマイズというリンクをクリック
   * <img src="./assets/step1_account_alias_00.png" width="800px">
