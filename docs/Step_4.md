@@ -7,10 +7,12 @@
   ls: cannot access /web: No such file or directory
   ```
 
+# 皆さんが思いつく、あるいは実施したことがあるデプロイの方法って何かあります？
+* etc ...
+
 # tomokatsu/aws-hands-on リポジトリを fork
 * デプロイするアプリケーションもこの `tomokatsu/aws-hands-on` に存在するので、自分の　GitHub アカウントに　fork しましょう
   * <img src="./assets/step4_github_fork_01.png" width="800px">
-
 
 # CodeDeploy 用の IAM ロールを作成
 * IAM ロールの画面を表示し、`ロールの作成` ボタンをクリック
@@ -91,35 +93,43 @@
     * after_install.sh で `touch /web/mysite/reload.trigger` しなければ、ディレクトリに配置しても最新のアプリケーションに切り替わらない
     * [../ec2/server/etc/uwsgi/vassals/mysite.ini](../ec2/server/etc/uwsgi/vassals/mysite.ini) に `touch-reload` オプションを指定しているから touch で reload できる
 
+# Extra) Github Actions から CodeDeploy を実行する
+* CodeDeploy でデプロイを作成するの、実際手間かかりましたよね？
+  * リポジトリ名入れたり、コミットID入れたり
+* ここでは、GithubActions と連携し、 master ブランチに変更が取り込まれたタイミングでデプロイが動くようにしていきます
+
+## IAM ユーザの作成
+* `ユーザの追加`　ボタンをクリック
+  * https://console.aws.amazon.com/iam/home?region=ap-northeast-1#/users
+  * <img src="./assets/step4_github_actions_01.png" width="800px">
+* ユーザ名に `aws-hands-on-github-actions` と入力
+  * <img src="./assets/step4_github_actions_02.png" width="800px">
+  * `プログラムによるアクセス` にチェックを入れて、`次のステップ: アクセス権限` ボタンをクリック
+* `AWSCodeDeployFullAccess` を検索し、選択して `次のステップ: タグ` ボタンをクリック
+  * <img src="./assets/step4_github_actions_03.png" width="800px">
+* タグの追加は特に設定せず、 `次のステップ: 確認` ボタンをクリック
+  * <img src="./assets/step4_github_actions_04.png" width="800px">
+* 内容を確認し`ユーザの作成`ボタンをクリック
+  * <img src="./assets/step4_github_actions_05.png" width="800px">
+* `.csv のダウンロード` ボタンをクリックし、クレデンシャルをダウンロードしておく
+  * <img src="./assets/step4_github_actions_06.png" width="800px">
+
+## GitHub のリポジトリに、クレデンシャルを登録
+* `New Secret` ボタンをクリック
+  * https://github.com/tomokatsu/aws-hands-on/settings/secrets
+* 2回に分けて値を登録する
+  * <img src="./assets/step4_github_actions_07.png" width="800px">
+* 登録する値は以下
+  * | Name                  | Value      |
+    | --------------------- | ---------- |
+    | AWS_ACCESS_KEY_ID	    | <CSVを参照> |
+    | AWS_SECRET_ACCESS_KEY | <CSVを参照> |
+  * <img src="./assets/step4_github_actions_08.png" width="800px">
+
+## あとは　master ブランチに変更を加えてみると、 Github Actions が起動するはず
+* <img src="./assets/step4_github_actions_09.png" width="800px">
+
 # Extra) Django アプケーションに変更を加えてみる
 * では、デプロイできる環境も揃ったので、手元のマシンで Django アプリケーションに変更を加えてみましょう
 * 加えた変更は GitHub に push して、再度 CodeDeploy でデプロイしてみましょう
 * refs. https://docs.djangoproject.com/ja/3.1/intro/tutorial01/#creating-the-polls-app
-
-# Extra) Github Actions から CodeDeploy を実行する
-## IAM ユーザの作成
-  * `ユーザの追加`　ボタンをクリック
-    * https://console.aws.amazon.com/iam/home?region=ap-northeast-1#/users
-    * <img src="./assets/step4_github_actions_01.png" width="800px">
-  * ユーザ名に `aws-hands-on-github-actions` と入力
-    * <img src="./assets/step4_github_actions_02.png" width="800px">
-    * `プログラムによるアクセス` にチェックを入れて、`次のステップ: アクセス権限` ボタンをクリック
-  * `AWSCodeDeployFullAccess` を検索し、選択して `次のステップ: タグ` ボタンをクリック
-    * <img src="./assets/step4_github_actions_03.png" width="800px">
-  * タグの追加は特に設定せず、 `次のステップ: 確認` ボタンをクリック
-    * <img src="./assets/step4_github_actions_04.png" width="800px">
-  * 内容を確認し`ユーザの作成`ボタンをクリック
-    * <img src="./assets/step4_github_actions_05.png" width="800px">
-  * `.csv のダウンロード` ボタンをクリックし、クレデンシャルをダウンロードしておく
-    * <img src="./assets/step4_github_actions_06.png" width="800px">
-## GitHub のリポジトリに、クレデンシャルを登録
-  * `New Secret` ボタンをクリック
-    * https://github.com/tomokatsu/aws-hands-on/settings/secrets
-  * 2回に分けて値を登録する
-    * <img src="./assets/step4_github_actions_07.png" width="800px">
-  * 登録する値は以下
-    * | Name                  | Value      |
-      | --------------------- | ---------- |
-      | AWS_ACCESS_KEY_ID	    | <CSVを参照> |
-      | AWS_SECRET_ACCESS_KEY | <CSVを参照> |
-    * <img src="./assets/step4_github_actions_08.png" width="800px">
