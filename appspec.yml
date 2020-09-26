@@ -1,0 +1,9 @@
+version: 0.0
+os: linux
+files:
+  - source: docker/app
+    destination: /web/mysite/app
+hooks:
+   AfterInstall:
+     - location: codedeploy/after_install.sh
+       timeout: 180
