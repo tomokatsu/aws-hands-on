@@ -1,0 +1,39 @@
+--- settings.py	2020-09-25 12:12:05.000000000 +0900
++++ settings.py	2020-09-25 12:09:30.000000000 +0900
+@@ -25,7 +25,7 @@
+ # SECURITY WARNING: don't run with debug turned on in production!
+ DEBUG = True
+ 
+-ALLOWED_HOSTS = []
++ALLOWED_HOSTS = ['*']
+ 
+ 
+ # Application definition
+@@ -73,12 +73,12 @@
+ # Database
+ # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+ 
+-DATABASES = {
+-    'default': {
+-        'ENGINE': 'django.db.backends.sqlite3',
+-        'NAME': BASE_DIR / 'db.sqlite3',
+-    }
+-}
++# DATABASES = {
++#     'default': {
++#         'ENGINE': 'django.db.backends.sqlite3',
++#         'NAME': BASE_DIR / 'db.sqlite3',
++#     }
++# }
+ 
+ 
+ # Password validation
+@@ -118,3 +118,8 @@
+ # https://docs.djangoproject.com/en/3.1/howto/static-files/
+ 
+ STATIC_URL = '/static/'
++
++try:
++    from .local_settings import *
++except ImportError:
++    pass

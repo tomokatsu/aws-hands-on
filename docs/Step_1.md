@@ -1,3 +1,5 @@
+# Step 1: AWS アカウントを準備しよう
+
 # AWS アカウント作成...の前に
 ## パスワードの管理について
 * 以降の手順では、いくつかパスワードを用意していただくことがあります
@@ -59,11 +61,13 @@
   * SMS か 音声通話を利用して本人確認を実施
 * サポートプランの選択
   * ベーシックプラン（無料）を選択
+  * <img src="./assets/step1_register_01.png" width="800px">
 * アマゾンウェブサービスへようこそ
   * コンソールにサインインボタンをクリック
 
 # サインイン
-![SignIn](./image/step1_signin_00.png)
+* https://console.aws.amazon.com/console/home
+  * <img src="./assets/step1_signin_00.png" width="800px">
 * ルートユーザを選択
 * ルートユーザの E メールアドレス: 登録時に設定したアドレスを記入
 * 次へボタンをクリック
@@ -72,8 +76,8 @@
 
 # アカウントエイリアスを設定
 * https://console.aws.amazon.com/iam/home?#/home
-![Customize](./image/step1_account_alias_00.png)
 * カスタマイズというリンクをクリック
+  * <img src="./assets/step1_account_alias_00.png" width="800px">
 * アカウントの別名を作成というポップアップが出る
   * アカウントエイリアス: 世界中の AWS アカウントがユニークに特定される必要があることに留意しつつ、任意のエイリアス名を記入
 * はい、作成するボタンをクリック

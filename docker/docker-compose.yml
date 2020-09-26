@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  nginx:
+    image: nginx:1.19
+    container_name: mysite.nginx
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - web
+  web:
+    build: ./web
+    container_name: mysite.web
+    command: uwsgi --http :8001 --chdir /web/mysite/app --module config.wsgi
+    working_dir: /web/mysite/app
+    ports:
+      - "8001:8001"
+    volumes:
+      - ./app:/web/mysite/app
+    expose:
+      - "8001"
