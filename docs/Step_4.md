@@ -132,4 +132,15 @@
 # Extra) Django アプケーションに変更を加えてみる
 * では、デプロイできる環境も揃ったので、手元のマシンで Django アプリケーションに変更を加えてみましょう
 * 加えた変更は GitHub に push して、再度 CodeDeploy でデプロイしてみましょう
+  * [../docker/app/config/urls.py](../docker/app/config/urls.py) にある `#path('polls/', include('polls.urls')),` の行をコメントインしてください
+  * 以下のようになっていればOK
+    ```
+    from django.contrib import admin
+    from django.urls import include, path
+
+    urlpatterns = [
+        path('polls/', include('polls.urls')),
+        path('admin/', admin.site.urls),
+    ]
+    ```
 * refs. https://docs.djangoproject.com/ja/3.1/intro/tutorial01/#creating-the-polls-app
