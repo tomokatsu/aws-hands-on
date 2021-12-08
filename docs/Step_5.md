@@ -13,33 +13,61 @@
 * `ロードバランサーの作成` ボタンをクリック
   * https://ap-northeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-1#LoadBalancers:sort=loadBalancerName
   * <img src="./assets/step5_lb_create_01.png" width="800px">
-* `Application Load Balancer` の `作成` ボタンをクリック
+* `Application Load Balancer` の `Create` ボタンをクリック
   * <img src="./assets/step5_lb_create_02.png" width="800px">
-* ロードバランサーの名前を設定し、アベイラビリティーゾーンを3つ選択してください
+* `Load balancer name` に `aws-hands-on` と入力する
   * <img src="./assets/step5_lb_create_03.png" width="800px">
-  * `次の手順: セキュリティ設定の構成` ボタンをクリック
-* セキュリティ設定の構成では特に何もせず `次の手順: セキュリティグループの設定` をクリック
-* ALB 用のセキュリティグループを作成する
+* `Network mapping` の `Mapping` では全て（3つ）のチェックボックスにチェックする 
   * <img src="./assets/step5_lb_create_04.png" width="800px">
-  * `次の手順: ルーティングの設定` ボタンをクリック
-* ターゲットグループを以下のように作成する
+* `Security groups` の項目で、`Create new security group` リンクをクリックする
   * <img src="./assets/step5_lb_create_05.png" width="800px">
-  * `次の手順: ターゲットの登録` ボタンをクリック
-* インスタンスを選択し `登録済に追加` ボタンをクリック
+  * 別タブが開くはず
+* セキュリティグループを作成する
   * <img src="./assets/step5_lb_create_06.png" width="800px">
+
+    * セキュリティグループ名: `aws-hands-on`
+    * 説明: `aws-hands-on`
+    * インバウンドルール
+        |  タイプ        |  プロトコル  | ポート範囲 | ソース           | 説明 |
+        | ------------- | ---------- | --------- | -------------- | --- |
+        |  HTTP         | TCP        | 80       |カスタム 0.0.0.0/0 |　 |
+  * `セキュリティグループを作成` ボタンを押す
+* 元のタブに戻って、作成したセキュリティグループを選択する
   * <img src="./assets/step5_lb_create_07.png" width="800px">
-  * `次の手順: 確認` ボタンをクリック
-* 設定内容を確認し`作成`ボタンをクリック
+
+  * `default` のセキュリティグループは使用しないので `×` を押して削除しておく
+* `Listeners and routing` の項目で `Create target group` リンクをクリックする
+  * <img src="./assets/step5_lb_create_08.png" width="800px">
+  * 別タブが開くはず
+* ターゲットグループを作成する
+  * <img src="./assets/step5_lb_create_09.png" width="800px">
+
+    * Choose a target type: Instances（デフォルト）
+    * Target group name: `aws-hands-on`
+    * Protocol: HTTP（デフォルト）
+    * Port: 80（デフォルト）
+  * <img src="./assets/step5_lb_create_10.png" width="800px">
+
+    * Health check protocol: HTTP（デフォルト）
+    * Health check path: `/healthcheck`
+    * Port: `Override`, `8000`
+  * `Next` ボタンを押す
+  * EC2インスタンスをターゲットグループに登録する
+  * <img src="./assets/step5_lb_create_11.png" width="800px">
+    * チェックボックスをチェックし `Includes as pending bellow` ボタンを押す
+    * `Create target group` ボタンを押す
+* 元のタブに戻って、作成したターゲットグループを選択する
+  * <img src="./assets/step5_lb_create_12.png" width="800px">
+* `Create load balancer` ボタンを押す
+* `View load balancer` ボタンを押す
 
 # ターゲットグループの確認
 * `aws-hands-on` のターゲットグループをクリック
   * https://ap-northeast-1.console.aws.amazon.com/ec2/home?region=ap-northeast-1#TargetGroups:
-  * <img src="./assets/step5_lb_target_group_01.png" width="800px">
 * ターゲットグループには EC2 インスタンスを所属させるが、所属している EC2 インスタンスが健康な状態か（healty）かどうかをチェックしている
   * 健康状態は、httpリクエストに対してレスポンスを返しているかという観点で観測している
-    * <img src="./assets/step5_lb_target_group_02.png" width="800px">
 * ターゲット（EC2 インスタンス）が健康である場合、 `healty` と判断され、ロードバランサにきたリクエストがそのターゲットに流れるようになる
-  * <img src="./assets/step5_lb_target_group_03.png" width="800px">
+  * <img src="./assets/step5_lb_target_group_01.png" width="800px">
 
 # ロードバランサーの確認
 * リスナータブでは、80番ポートに来たHTTPプロトコルのリクエストを、どういうルールでターゲットに流すかという設定がされている

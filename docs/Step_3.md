@@ -45,7 +45,8 @@
 ## EC2 インスタンスを起動してみよう
 * https://ap-northeast-1.console.aws.amazon.com/ec2/v2/home?region=ap-northeast-1#Instances:
 * `インスタンスを起動` ボタンをクリック
-* 左の`無料利用枠のみ`にチェックを入れ、`Amazon Linux 2 AMI (HVM), SSD Volume Type 　64 ビット (x86)`にある`選択`ボタンをクリック
+* 左の`無料利用枠のみ`にチェックを入れ、`Amazon Linux 2 AMI (HVM) - Kernel 5.10, SSD Volume Type`にある`選択`ボタンをクリック
+  * ラジオボタンは `64 ビット (x86)` を選択しておく
   * <img src="./assets/step3_ec2_run_01.png" width="800px">
 * インスタンスタイプは `t2.micro (無料利用枠の対象)` が選択された状態で`次のステップ: インスタンスの詳細の設定`ボタンをクリック
   * <img src="./assets/step3_ec2_run_02.png" width="800px">
@@ -70,7 +71,7 @@
       |  HTTP         | TCP        | 80       |カスタム 0.0.0.0/0 | nginx default |
       |  カスタムTCP   | TCP        | 8001     |カスタム 0.0.0.0/0 | uwsgi(django) |
       |  カスタムTCP   | TCP        | 8000     |カスタム 0.0.0.0/0 | nginx(django)    |
-      |  SSH          | TCP        | 22       |カスタム 0.0.0.0/0 | EC2_INSTANCE_CONNECT(ap-northeast-1) |
+
   * `確認と作成` ボタンをクリック
 * `起動` ボタンをクリック
   * キーペアについて質問されるので `キーペアなしで続行` を選択し、チェックボックスにもチェックを入れる
@@ -228,18 +229,3 @@
             └─4805 systemctl status amazon-ssm-agent.service
   ```
   * これをみると、amazon-ssm-agent.service　のプロセスから sh や bash が起動されてることがわかる
-
-## CodeDeployの Agent について
-* CodeDeploy とは、この後の手順で Django アプリケーションをデプロイするために使う仕組みです
-* Codedeploy を使って EC2 インスタンスにデプロイするためには、専用の Agent が必要です
-  * これも　Amazon Linux 2 には初期状態でインストールされていて、自動起動される
-  ```
-  [ssm-user@ip-172-31-22-149 ~]$ systemctl status codedeploy-agent.service
-  ● codedeploy-agent.service - AWS CodeDeploy Host Agent
-    Loaded: loaded (/usr/lib/systemd/system/codedeploy-agent.service; enabled; vendor preset: disabled)
-    Active: active (running) since Fri 2020-09-25 08:06:08 UTC; 1h 0min ago
-  Main PID: 3766 (ruby)
-    CGroup: /system.slice/codedeploy-agent.service
-            ├─3766 codedeploy-agent: master 3766
-            └─3770 codedeploy-agent: InstanceAgent::Plugins::CodeDeployPlugin::CommandPoller of master 3766
-  ```

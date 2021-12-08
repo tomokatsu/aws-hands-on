@@ -32,7 +32,7 @@
 # ルートアカウントの MFA を有効化
 * ルートアカウントにログインする際に、2要素認証が必要になるよう設定する
 * https://console.aws.amazon.com/iam/home?region=ap-northeast-1#/home
-* `MFAの管理` ボタンをクリック
+* `MFAを追加` ボタンをクリック
   * <img src="./assets/step2_root_mfa_01.png" width="800px">
 * `MFAの有効化` ボタンをクリック
   * <img src="./assets/step2_root_mfa_02.png" width="800px">
@@ -47,8 +47,12 @@
   * <img src="./assets/step2_root_mfa_05.png" width="800px">
 * `MFA の割り当て`ボタンを押して、設定に成功すれば完了
   * <img src="./assets/step2_root_mfa_06.png" width="800px">
-* 一度 AWS アカウントからログアウトして、再度ログインしてみると、MFA コードの入力を求められるはず
+* `シークレットブラウザ` を別途開き、AWS にログインしてみるとMFA コードの入力を求められるはず
+  * https://console.aws.amazon.com/console/home
+  * MFA 設定がミスしていたら詰むので、まずはシークレットブラウザで試すのをお勧めします
   * <img src="./assets/step2_root_mfa_07.png" width="800px">
+
+* シークレットブラウザで問題なくログインできたら、メインのブラウザで AWS アカウントからログアウトして、再度ログインする
 
 
 # 利用するリージョンを限定しておく
@@ -77,10 +81,6 @@
 * refs. https://aws.amazon.com/jp/blogs/news/how-to-change-aws-ca-by-artifact/
 
 # その他アカウントの設定
-* 下記ページにあるセキュリティーステータスは、本当は全て `Green` になっていることが望ましい
-  * https://console.aws.amazon.com/iam/home?region=us-east-1#/home
-  * <img src="./assets/step2_security_status_01.png" width="800px">
-
 * 良い記事があったので、よければ参考にしてみてください
   * https://qiita.com/tmknom/items/303db2d1d928db720888
   * **CloudTrailの設定をすると`お金がかかるので注意`**
