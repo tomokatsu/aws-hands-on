@@ -6,8 +6,38 @@
   [ssm-user@ip-172-31-22-149 bin]$ ll /web
   ls: cannot access /web: No such file or directory
   ```
+## CodeDeployの Agent について
+* Codedeploy を使って EC2 インスタンスにデプロイするためには、専用の Agent が必要です
+  * インストールされていないことを確認
+  ```
+  [ssm-user@ip-172-31-22-149 ~]$ systemctl status codedeploy-agent.service
+  Unit codedeploy-agent.service could not be found.
+  ```
+* 通常　Linux にアプリケーションをインストールする場合、パッケージマネージャーを使う
+    * Amazon Linux 2 では `yum` というパッケージマネージャーがデフォルトで使える
+    * Step 3 の Extra 項目で使っていたコマンドもこの `yum`
+    * しかし　codedeploy-agent は yum でインストールできるようなパッケージが用意されていない
+* 今回は、AWS マネジメントコンソールからログインする方法を試してみる
+* 参考: https://dev.classmethod.jp/articles/codedeploy-agent-ssm-distributor/#toc-4
 
-# 皆さんが思いつく、あるいは実施したことがあるデプロイの方法って何かあります？
+## codedeploy-agent をインストールする
+* AWS Systems Manager のディストリビューターを使う
+* https://ap-northeast-1.console.aws.amazon.com/systems-manager/distributor?region=ap-northeast-1
+* `AWSCodeDeployAgent` と入力して検索する
+  * <img src="./assets/step4_code_deploy_agent_01.png" width="800px">
+  * `AWSCodeDeployAgent` のリンクをクリック
+* 右上の`1回限りのインストール`ボタンをクリック 
+  * <img src="./assets/step4_code_deploy_agent_02.png" width="800px">
+* 下にスクロールし、`ターゲット`の項目で`インスタンス を手動で選択する`を選択
+  * <img src="./assets/step4_code_deploy_agent_03.png" width="800px">
+  * `Instances` の項目で表示されているインスタンスのチェックボックスをチェックする
+* さらに下にスクロールし、`出力オプション` の `S3バケットへの書き込みを有効化する` でチェックを外す
+  * <img src="./assets/step4_code_deploy_agent_04.png" width="800px">
+* `実行`ボタンを押す
+* ステータスが `進行中` から `成功` になれば OK
+  * <img src="./assets/step4_code_deploy_agent_05.png" width="800px">
+
+## 実行を待っている間に。皆さんが思いつく、あるいは実施したことがあるデプロイの方法って何かあります？
 * etc ...
 
 # tomokatsu/aws-hands-on リポジトリを fork
