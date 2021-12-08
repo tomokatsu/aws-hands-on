@@ -54,6 +54,7 @@
   * `Next` ボタンを押す
   * EC2インスタンスをターゲットグループに登録する
   * <img src="./assets/step5_lb_create_11.png" width="800px">
+  
     * チェックボックスをチェックし `Includes as pending bellow` ボタンを押す
     * `Create target group` ボタンを押す
 * 元のタブに戻って、作成したターゲットグループを選択する
