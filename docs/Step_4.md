@@ -36,7 +36,17 @@
 * `実行`ボタンを押す
 * ステータスが `進行中` から `成功` になれば OK
   * <img src="./assets/step4_code_deploy_agent_05.png" width="800px">
-
+* インストールが無事完了していたら、起動していることを確認する
+  ```
+  [ssm-user@ip-172-31-22-149 ~]$ systemctl status codedeploy-agent.service
+  ● codedeploy-agent.service - AWS CodeDeploy Host Agent
+    Loaded: loaded (/usr/lib/systemd/system/codedeploy-agent.service; enabled; vendor preset: disabled)
+    Active: active (running) since Fri 2020-09-25 08:06:08 UTC; 1h 0min ago
+  Main PID: 3766 (ruby)
+    CGroup: /system.slice/codedeploy-agent.service
+            ├─3766 codedeploy-agent: master 3766
+            └─3770 codedeploy-agent: InstanceAgent::Plugins::CodeDeployPlugin::CommandPoller of master 3766
+  ```
 ## 実行を待っている間に。皆さんが思いつく、あるいは実施したことがあるデプロイの方法って何かあります？
 * etc ...
 
